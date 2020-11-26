@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<script src="./js/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+		<script type="text/javascript">
+			window.onload = function() {
+				var oDiv = document.getElementById("content");
+				var aDivs = oDiv.getElementsByTagName("div");
+				var aSpans = oDiv.getElementsByTagName("span");
+				var lng = null;
+				var lat = null;
+				for (var i = 0; i < aSpans.length; i++) {
+					aSpans[i].index = i;
+					aSpans[i].onclick = function() {
+						// alert(this.index);
+						if (this.index == 0) {
+							lng = "114";
+							lat = "31";
+							console.log(lng, lat);
+							$.ajax({
+								type: 'post',
+								url: 'http://route.showapi.com/9-5',
+								dataType: 'json',
+								data: {
+									"showapi_appid": '435557', //这里需要改成自己的appid
+									"showapi_sign": '8105b5ee512b4c5f9f48a2375059ff32', //这里需要改成自己的应用的密钥secret
+									"from": "5",
+									"lng": lng,
+									"lat": lat,
+								},
+								error: function(XmlHttpRequest, textStatus, errorThrown) {
+									console.log(errorThrown)
+								},
+								success: function(result) {
+									console.log(result)
+									$("#img2").attr("src", result.showapi_res_body.now.weather_pic)
+									$(".wenduday").html(result.showapi_res_body.f1.day_air_temperature + "℃");
+									$(".wendunight").html(result.showapi_res_body.f1.night_air_temperature + "℃");
+									$("#wendunow").html(result.showapi_res_body.now.temperature + "℃");
+									$("#mid2").html(result.showapi_res_body.f1.day_weather);
+								}
+							});
+						}
+						if (this.index == 1) {
+							lng = "114.09";
+							lat = "31.56";
+							$.ajax({
+								type: 'post',
+								url: 'http://route.showapi.com/9-5',
+								dataType: 'json',
+								data: {
+									"showapi_appid": '435557', //这里需要改成自己的appid
+									"showapi_sign": '8105b5ee512b4c5f9f48a2375059ff32', //这里需要改成自己的应用的密钥secret
+									"from": "5",
+									"lng": lng,
+									"lat": lat,
+								},
+								error: function(XmlHttpRequest, textStatus, errorThrown) {
+									console.log(errorThrown)
+								},
+								success: function(result) {
+									console.log(result)
+									$("#img2").attr("src", result.showapi_res_body.now.weather_pic)
+									$(".wenduday").html(result.showapi_res_body.f1.day_air_temperature + "℃");
+									$(".wendunight").html(result.showapi_res_body.f1.night_air_temperature + "℃");
+									$("#wendunow").html(result.showapi_res_body.now.temperature + "℃");
+									$("#mid2").html(result.showapi_res_body.f1.day_weather);
+								}
+							});
+						}
+						if (this.index == 2) {
+							lng = "112.59";
+							lat = "28.12";
+							$.ajax({
+								type: 'post',
+								url: 'http://route.showapi.com/9-5',
+								dataType: 'json',
+								data: {
+									"showapi_appid": '435557', //这里需要改成自己的appid
+									"showapi_sign": '8105b5ee512b4c5f9f48a2375059ff32', //这里需要改成自己的应用的密钥secret
+									"from": "5",
+									"lng": lng,
+									"lat": lat,
+								},
+								error: function(XmlHttpRequest, textStatus, errorThrown) {
+									console.log(errorThrown)
+								},
+								success: function(result) {
+									console.log(result)
+									$("#img2").attr("src", result.showapi_res_body.now.weather_pic)
+									$(".wenduday").html(result.showapi_res_body.f1.day_air_temperature + "℃");
+									$(".wendunight").html(result.showapi_res_body.f1.night_air_temperature + "℃");
+									$("#wendunow").html(result.showapi_res_body.now.temperature + "℃");
+									$("#mid2").html(result.showapi_res_body.f1.day_weather);
+								}
+							});
+						}
+						//清除div样式
+						for (var j = 0; j < aSpans.length; j++) {
+							aDivs[j].style.display = "none";
+						}
+						aDivs[this.index].style.display = "block";
+					}
+
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="content">
+			<div style="display: block;">孝南</div>
+			<div style="display: none;">大悟</div>
+			<div style="display: none;">长沙</div>
+			<br>
+			<br>
+			<!-- 左右滑动 -->
+			<span class="left"><img src="img/leftArrow.png" alt="#" style="width: 100px;height: 100px;"></span>
+			<span class="midst"> <img src="img/refresh.png" id="img2" alt="" style="width: 150px;height: 150px;"></span>
+			<span class="right"><img src="img/rightArrow.png" alt="" style="width: 100px;height: 100px;"></span>
+
+		</div>
+		<!-- 显示天气情况 -->
+		<div id="wendunow"></div>
+		<div class="wenduday"></div>
+		<div class="wendunight"></div>
+		<div id="mid2"></div>
+
+	</body>
+</html>
